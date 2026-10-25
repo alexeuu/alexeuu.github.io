@@ -1,0 +1,405 @@
+teste<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alex Silva — Desenvolvedor Full Stack</title>
+  <meta name="description" content="Portfólio de Alex Silva, desenvolvedor full stack e estudante de Ciência da Computação. Projetos web com HTML, CSS, JavaScript e TypeScript, além de Java e Python.">
+  <meta name="theme-color" content="#131B24">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#131B24',
+            panel: '#1A2531',
+            line: '#263443',
+            fog: '#E6ECF2',
+            mist: '#8696A7',
+            amber: '#F2B441',
+            amberInk: '#1F1606'
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          },
+          maxWidth: { page: '72rem' }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background: #131B24; }
+    ::selection { background: #F2B441; color: #1F1606; }
+
+    :focus-visible { outline: 2px solid #F2B441; outline-offset: 3px; border-radius: 4px; }
+
+    /* Nome do hero: o único momento de movimento automático da página */
+    .name-line { display: block; overflow: hidden; }
+    .name-line > span { display: inline-block; transform: translateY(105%); animation: rise .9s cubic-bezier(.2,.7,.1,1) forwards; }
+    .name-line:nth-child(2) > span { animation-delay: .12s; }
+    .hero-fade { opacity: 0; animation: fade .7s ease .55s forwards; }
+    @keyframes rise { to { transform: translateY(0); } }
+    @keyframes fade { to { opacity: 1; } }
+
+    /* Sublinhado que cresce no hover dos links de texto */
+    .ulink { background-image: linear-gradient(#F2B441, #F2B441); background-size: 0 1px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size .25s ease; }
+    .ulink:hover, .ulink:focus-visible { background-size: 100% 1px; }
+
+    /* Card de projeto: a borda acende a partir do ponteiro */
+    .project { position: relative; isolation: isolate; }
+    .project::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; z-index: -1;
+      background: radial-gradient(320px circle at var(--x, 50%) var(--y, 50%), rgba(242,180,65,.55), transparent 60%);
+      opacity: 0; transition: opacity .3s ease; }
+    .project:hover::before, .project:focus-within::before { opacity: 1; }
+
+    .dot-live { box-shadow: 0 0 0 0 rgba(242,180,65,.6); animation: pulse 2.4s ease-out infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(242,180,65,.55); } 70%,100% { box-shadow: 0 0 0 8px rgba(242,180,65,0); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .name-line > span, .hero-fade { animation: none; transform: none; opacity: 1; }
+      .dot-live { animation: none; }
+      .project::before, .ulink { transition: none; }
+    }
+  </style>
+</head>
+
+<body class="font-sans text-fog antialiased leading-relaxed">
+  <a href="#conteudo" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 bg-amber text-amberInk px-4 py-2 rounded-md font-medium">Pular para o conteúdo</a>
+
+  <!-- Navegação -->
+  <header class="sticky top-0 z-40 bg-ink/85 backdrop-blur border-b border-line/60">
+    <nav class="max-w-page mx-auto px-5 sm:px-8 h-16 flex items-center justify-between" aria-label="Principal">
+      <a href="#topo" class="font-display font-semibold tracking-tight text-lg">AS<span class="text-amber">.</span></a>
+
+      <button id="menuBtn" class="sm:hidden p-2 -mr-2 text-fog" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+
+      <ul id="menu" class="hidden sm:flex absolute sm:static top-16 inset-x-0 sm:inset-auto flex-col sm:flex-row gap-1 sm:gap-8 bg-ink sm:bg-transparent border-b sm:border-0 border-line px-5 py-4 sm:p-0 text-sm text-mist">
+        <li><a class="block py-2 sm:py-0 hover:text-fog transition-colors" href="#sobre">Sobre</a></li>
+        <li><a class="block py-2 sm:py-0 hover:text-fog transition-colors" href="#stack">Stack</a></li>
+        <li><a class="block py-2 sm:py-0 hover:text-fog transition-colors" href="#projetos">Projetos</a></li>
+        <li><a class="block py-2 sm:py-0 hover:text-fog transition-colors" href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <!-- Hero -->
+    <section id="topo" class="max-w-page mx-auto px-5 sm:px-8 pt-16 sm:pt-28 pb-20 sm:pb-32">
+      <div class="grid lg:grid-cols-[1fr_auto] gap-12 lg:gap-16 items-end">
+        <div>
+          <h1 class="font-display font-bold tracking-[-0.04em] leading-[0.92] text-[clamp(3.25rem,11vw,8.5rem)]">
+            <span class="name-line"><span>Alex</span></span>
+            <span class="name-line"><span>Silva</span></span>
+          </h1>
+
+          <div class="hero-fade">
+            <p class="mt-8 font-display text-xl sm:text-2xl text-fog">Desenvolvedor full stack</p>
+            <p class="mt-3 max-w-xl text-mist text-base sm:text-lg">
+              Estudante de Ciência da Computação. Construo sites e aplicações web com JavaScript e TypeScript,
+              e uso Java e Python no back-end e nos estudos. Gosto de projetos que vão para o ar, não ficam só no localhost.
+            </p>
+
+            <div class="mt-10 flex flex-wrap gap-3">
+              <a href="#contato" class="inline-flex items-center gap-2 rounded-full bg-amber text-amberInk font-medium px-5 py-3 hover:bg-[#f6c562] transition-colors">
+                Entrar em contato
+              </a>
+              <a href="https://github.com/alexeuu" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3 hover:border-mist transition-colors">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.4-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+                GitHub
+              </a>
+              <a href="#" data-linkedin target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3 hover:border-mist transition-colors">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+                LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status atual -->
+        <aside class="hero-fade lg:w-72 rounded-2xl border border-line bg-panel/60 p-6 text-sm" aria-label="Status atual">
+          <p class="flex items-center gap-2.5 text-fog font-medium">
+            <span class="dot-live inline-block w-2 h-2 rounded-full bg-amber"></span>
+            Aberto a novos projetos
+          </p>
+          <dl class="mt-5 space-y-3">
+            <div class="flex justify-between gap-4"><dt class="text-mist">Base</dt><dd>Brasil</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-mist">Trabalho</dt><dd>Remoto ou híbrido</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-mist">Agora</dt><dd>NovaLaunch</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Sobre -->
+    <section id="sobre" class="border-t border-line">
+      <div class="max-w-page mx-auto px-5 sm:px-8 py-20 sm:py-28 grid md:grid-cols-[14rem_1fr] gap-8 md:gap-16">
+        <h2 class="font-display text-3xl font-semibold tracking-tight">Sobre mim</h2>
+        <div class="max-w-[62ch] space-y-5 text-lg text-mist">
+          <p class="text-fog">
+            Sou estudante de Ciência da Computação e estou me formando como desenvolvedor full stack.
+            No front-end trabalho com HTML, CSS, JavaScript, TypeScript e Bootstrap; no back-end, com Java e Python.
+          </p>
+          <p>
+            Meus projetos nascem de problemas reais, como o portal que reúne informações que eu e meus colegas
+            de faculdade precisávamos consultar todo dia. Busco código legível, com nomes claros e poucas dependências.
+          </p>
+          <p>
+            Cada projeto publicado aqui é uma etapa do que estou aprendendo, e o código de todos está aberto no GitHub.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stack -->
+    <section id="stack" class="border-t border-line">
+      <div class="max-w-page mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        <h2 class="font-display text-3xl font-semibold tracking-tight">Stack e ferramentas</h2>
+        <p class="mt-3 text-mist max-w-xl">As linguagens e ferramentas que uso nos meus projetos.</p>
+
+        <div class="mt-12 grid gap-10 md:gap-6 md:grid-cols-3">
+          <div>
+            <h3 class="font-display text-lg font-medium pb-4 border-b border-line">Frontend</h3>
+            <ul class="mt-5 flex flex-wrap gap-2 text-sm">
+              <li class="px-3 py-1.5 rounded-md bg-panel border border-line">HTML5</li>
+              <li class="px-3 py-1.5 rounded-md bg-panel border border-line">CSS3</li>
+              <li class="px-3 py-1.5 rounded-md bg-panel border border-line">JavaScript</li>
+              <li class="px-3 py-1.5 rounded-md bg-panel border border-line">TypeScript</li>
+              <li class="px-3 py-1.5 rounded-md bg-panel border border-line">Bootstrap</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-display text-lg font-medium pb-4 border-b border-line">Backend</h3>
+            <ul class="mt-5 flex flex-wrap gap-2 text-sm">
+              <li class="px-3 py-1.5 rounded-md bg-panel border border-line">Java</li>
+              <li class="px-3 py-1.5 rounded-md bg-panel border border-line">Python</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-display text-lg font-medium pb-4 border-b border-line">Ferramentas</h3>
+            <ul class="mt-5 flex flex-wrap gap-2 text-sm">
+              <li class="px-3 py-1.5 rounded-md bg-panel border border-line">Git</li>
+              <li class="px-3 py-1.5 rounded-md bg-panel border border-line">GitHub</li>
+              <li class="px-3 py-1.5 rounded-md bg-panel border border-line">GitHub Pages</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projetos -->
+    <section id="projetos" class="border-t border-line">
+      <div class="max-w-page mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        <h2 class="font-display text-3xl font-semibold tracking-tight">Projetos em destaque</h2>
+        <p class="mt-3 text-mist max-w-xl">Código aberto no GitHub. Os que têm demo estão no ar agora.</p>
+
+        <div class="mt-12 grid gap-5 md:grid-cols-2">
+
+          <!-- Projeto principal: ocupa a largura toda -->
+          <article class="project md:col-span-2 rounded-2xl bg-panel border border-line p-7 sm:p-10">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+              <div class="max-w-2xl">
+                <p class="text-sm text-amber font-medium">Projeto principal</p>
+                <h3 class="mt-2 font-display text-3xl sm:text-4xl font-semibold tracking-tight">NovaLaunch</h3>
+                <p class="mt-4 text-mist text-lg">
+                  Página de lançamento para produtos digitais, com lista de espera e seções pensadas para converter visitantes em inscritos.
+                </p>
+                <ul class="mt-6 flex flex-wrap gap-2 text-xs text-fog/90">
+                  <li class="px-2.5 py-1 rounded border border-line">HTML5</li>
+                  <li class="px-2.5 py-1 rounded border border-line">CSS3</li>
+                  <li class="px-2.5 py-1 rounded border border-line">TypeScript</li>
+                  <li class="px-2.5 py-1 rounded border border-line">Bootstrap</li>
+                </ul>
+              </div>
+              <div class="flex gap-3 shrink-0">
+                <a href="https://github.com/alexeuu" target="_blank" rel="noopener" class="rounded-full border border-line px-5 py-2.5 text-sm hover:border-mist transition-colors">Código</a>
+                <a href="#" data-demo target="_blank" rel="noopener" class="rounded-full bg-amber text-amberInk font-medium px-5 py-2.5 text-sm hover:bg-[#f6c562] transition-colors">Live demo</a>
+              </div>
+            </div>
+          </article>
+
+          
+
+          
+
+          <article class="project rounded-2xl bg-panel border border-line p-7 flex flex-col">
+            <h3 class="font-display text-2xl font-semibold tracking-tight">Portal da Faculdade</h3>
+            <p class="mt-3 text-mist">
+              Reúne e-mails dos professores, horários dos ônibus e uma calculadora de notas, com tema claro e escuro.
+            </p>
+            <ul class="mt-5 flex flex-wrap gap-2 text-xs text-fog/90">
+              <li class="px-2.5 py-1 rounded border border-line">HTML5</li>
+              <li class="px-2.5 py-1 rounded border border-line">CSS3</li>
+              <li class="px-2.5 py-1 rounded border border-line">JavaScript</li>
+            </ul>
+            <div class="mt-auto pt-7 flex gap-5 text-sm">
+              <a href="https://github.com/alexeuu/portal-facul" target="_blank" rel="noopener" class="ulink pb-0.5">Código</a>
+              <a href="https://alexeuu.github.io/portal-facul/" target="_blank" rel="noopener" class="ulink pb-0.5 text-amber">Live demo</a>
+            </div>
+          </article>
+          <article class="project rounded-2xl bg-panel border border-line p-7 flex flex-col">
+            <h3 class="font-display text-2xl font-semibold tracking-tight">Este portfólio</h3>
+            <p class="mt-3 text-mist">
+              Site de página única, responsivo, com formulário de contato que funciona sem servidor, publicado no GitHub Pages.
+            </p>
+            <ul class="mt-5 flex flex-wrap gap-2 text-xs text-fog/90">
+              <li class="px-2.5 py-1 rounded border border-line">HTML5</li>
+              <li class="px-2.5 py-1 rounded border border-line">JavaScript</li>
+              <li class="px-2.5 py-1 rounded border border-line">Tailwind CSS</li>
+            </ul>
+            <div class="mt-auto pt-7 flex gap-5 text-sm">
+              <a href="https://github.com/alexeuu/alexeuu.github.io" target="_blank" rel="noopener" class="ulink pb-0.5">Código</a>
+              <a href="https://alexeuu.github.io/" class="ulink pb-0.5 text-amber">Live demo</a>
+            </div>
+          </article>
+        </div>
+
+        <p class="mt-10 text-mist">
+          Tem mais no <a href="https://github.com/alexeuu" target="_blank" rel="noopener" class="ulink text-fog pb-0.5">meu GitHub</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato" class="border-t border-line">
+      <div class="max-w-page mx-auto px-5 sm:px-8 py-20 sm:py-28 grid lg:grid-cols-2 gap-14">
+        <div>
+          <h2 class="font-display text-[clamp(2.25rem,5vw,3.5rem)] font-semibold tracking-tight leading-[1.05]">
+            Tem um projeto ou uma vaga?<br>Vamos conversar.
+          </h2>
+          <p class="mt-5 text-mist text-lg max-w-md">Respondo por e-mail, normalmente no mesmo dia.</p>
+
+          <div class="mt-10 space-y-4">
+            <div class="flex flex-wrap items-center gap-3">
+              <a id="emailLink" href="mailto:alexbr5450@gmail.com" class="font-display text-xl sm:text-2xl ulink pb-1 break-all">alexbr5450@gmail.com</a>
+              <button id="copyBtn" type="button" class="text-sm rounded-full border border-line px-3 py-1 text-mist hover:text-fog hover:border-mist transition-colors">Copiar</button>
+            </div>
+            <ul class="flex flex-wrap gap-x-6 gap-y-2 text-mist">
+              <li><a href="https://wa.me/5548984274028" target="_blank" rel="noopener" class="ulink pb-0.5 hover:text-fog">WhatsApp (48) 98427-4028</a></li>
+              <li><a href="https://github.com/alexeuu" target="_blank" rel="noopener" class="ulink pb-0.5 hover:text-fog">GitHub</a></li>
+              <li><a href="#" data-linkedin target="_blank" rel="noopener" class="ulink pb-0.5 hover:text-fog">LinkedIn</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <form id="contactForm" class="rounded-2xl bg-panel border border-line p-6 sm:p-8 space-y-5" novalidate>
+          <div>
+            <label for="nome" class="block text-sm text-mist mb-2">Nome</label>
+            <input id="nome" name="nome" type="text" required autocomplete="name"
+              class="w-full rounded-lg bg-ink border border-line px-4 py-3 text-fog placeholder:text-mist/60 focus:border-amber focus:outline-none transition-colors" placeholder="Como posso te chamar?">
+          </div>
+          <div>
+            <label for="assunto" class="block text-sm text-mist mb-2">Assunto</label>
+            <input id="assunto" name="assunto" type="text" required
+              class="w-full rounded-lg bg-ink border border-line px-4 py-3 text-fog placeholder:text-mist/60 focus:border-amber focus:outline-none transition-colors" placeholder="Projeto freelance, vaga, dúvida...">
+          </div>
+          <div>
+            <label for="mensagem" class="block text-sm text-mist mb-2">Mensagem</label>
+            <textarea id="mensagem" name="mensagem" rows="5" required
+              class="w-full rounded-lg bg-ink border border-line px-4 py-3 text-fog placeholder:text-mist/60 focus:border-amber focus:outline-none transition-colors resize-y" placeholder="Conte o que você precisa e qual o prazo."></textarea>
+          </div>
+          <p id="formMsg" class="text-sm min-h-[1.25rem]" role="status" aria-live="polite"></p>
+          <button type="submit" class="w-full rounded-full bg-amber text-amberInk font-medium py-3 hover:bg-[#f6c562] transition-colors">
+            Enviar mensagem
+          </button>
+          <p class="text-xs text-mist text-center">O botão abre seu app de e-mail com a mensagem pronta.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-line">
+    <div class="max-w-page mx-auto px-5 sm:px-8 py-8 flex flex-col sm:flex-row gap-3 justify-between text-sm text-mist">
+      <p>&copy; <span id="ano"></span> Alex Silva</p>
+      <a href="#topo" class="ulink pb-0.5 self-start hover:text-fog">Voltar ao topo</a>
+    </div>
+  </footer>
+
+  <script>
+    const EMAIL = 'alexbr5450@gmail.com';
+
+    document.getElementById('ano').textContent = new Date().getFullYear();
+
+    // Preencha aqui quando tiver os links (vazio = escondido / "Demo em breve")
+    const LINKEDIN = 'https://www.linkedin.com/in/alexsandro-santos-da-silva-1850ab312';
+    document.querySelectorAll('[data-linkedin]').forEach(a => {
+      if (LINKEDIN) a.href = LINKEDIN; else (a.closest('li') || a).remove();
+    });
+    document.querySelectorAll('a[data-demo]').forEach(a => {
+      const span = document.createElement('span');
+      span.textContent = 'Demo em breve';
+      span.className = 'text-mist/70 text-sm self-center';
+      a.replaceWith(span);
+    });
+
+
+    // Menu mobile
+    const menuBtn = document.getElementById('menuBtn');
+    const menu = document.getElementById('menu');
+    const toggleMenu = (open) => {
+      menu.classList.toggle('hidden', !open);
+      menu.classList.toggle('flex', open);
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    };
+    menuBtn.addEventListener('click', () => toggleMenu(menu.classList.contains('hidden')));
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      if (window.innerWidth < 640) toggleMenu(false);
+    }));
+
+    // Brilho da borda seguindo o ponteiro
+    document.querySelectorAll('.project').forEach(card => {
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--x', `${e.clientX - r.left}px`);
+        card.style.setProperty('--y', `${e.clientY - r.top}px`);
+      });
+    });
+
+    // Copiar e-mail
+    const copyBtn = document.getElementById('copyBtn');
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(EMAIL);
+        copyBtn.textContent = 'Copiado';
+      } catch {
+        copyBtn.textContent = 'Selecione e copie';
+      }
+      setTimeout(() => (copyBtn.textContent = 'Copiar'), 2000);
+    });
+
+    // Formulário: monta um mailto (funciona sem backend no GitHub Pages)
+    const form = document.getElementById('contactForm');
+    const msg = document.getElementById('formMsg');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const nome = form.nome.value.trim();
+      const assunto = form.assunto.value.trim();
+      const mensagem = form.mensagem.value.trim();
+
+      if (!nome || !assunto || !mensagem) {
+        msg.textContent = 'Preencha nome, assunto e mensagem para enviar.';
+        msg.className = 'text-sm min-h-[1.25rem] text-amber';
+        return;
+      }
+
+      const body = `${mensagem}\n\n— ${nome}`;
+      window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(body)}`;
+      msg.textContent = 'Seu app de e-mail foi aberto com a mensagem pronta.';
+      msg.className = 'text-sm min-h-[1.25rem] text-mist';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
